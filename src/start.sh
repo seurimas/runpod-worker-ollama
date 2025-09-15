@@ -31,7 +31,20 @@ while ! check_server_is_running; do
 done
 # IF $MODEL_NAME is set, make sure to pull the model, else just skip
 if [ -z "$MODEL_NAME" ]; then
-    echo "No model name provided. Skipping model pull..."
+    if [ -z "$MODEL_NAMES" ]; then
+      echo "No models provided. Assuming they're already pulled."
+    else
+        IFS=',' read -r -a MODELS <<< "$MODEL_NAMES"
+        for MODEL_NAME in "${MODELS[@]}"; do
+            echo "Pulling model: $MODEL_NAME"
+            if ollama pull "$MODEL_NAME"; then
+              echo "Successfully pulled model: $MODEL_NAME"
+            else
+              echo "Failed to pull model: $MODEL_NAME"
+              exit 1
+            fi
+        done
+    fi
 else
     echo "Pulling model $MODEL_NAME..."
     ollama pull $MODEL_NAME

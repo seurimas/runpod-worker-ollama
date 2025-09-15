@@ -12,9 +12,9 @@
     "presets": [],
     "env": [
       {
-        "key": "MODEL_NAME",
+        "key": "MODEL_NAMES",
         "input": {
-          "name": "Model Name",
+          "name": "Model Names to preload, comma-separated",
           "type": "string",
           "description": "Name of a model to preload",
           "default": "phi3",
