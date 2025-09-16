@@ -50,4 +50,21 @@ else
     ollama pull $MODEL_NAME
 fi
 
+if [ -z "$MODEL_FILES" ]; then
+    echo "No model files provided. Skipping model import."
+else
+    IFS=',' read -r -a NAME_FILE_PAIRS <<< "$MODEL_FILES"
+    for PAIR in "${NAME_FILE_PAIRS[@]}"; do
+        IFS='=' read -r MODEL_NAME MODEL_FILE <<< "$PAIR"
+        echo "Create model $MODEL_NAME from file $MODEL_FILE..."
+        if ollama create "$MODEL_NAME" -f "$MODEL_FILE"; then
+            echo "Successfully create model: $MODEL_NAME"
+        else
+            echo "Failed to create model: $MODEL_NAME"
+            exit 1
+        fi
+    done
+fi
+
+
 python -u handler.py $1

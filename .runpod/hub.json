@@ -14,11 +14,21 @@
       {
         "key": "MODEL_NAMES",
         "input": {
-          "name": "Model Names to preload, comma-separated",
+          "name": "Model Names to preloadd",
           "type": "string",
-          "description": "Name of a model to preload",
+          "description": "Name of models to preload, comma-separated",
           "default": "phi3",
           "advanced": false
+        }
+      },
+      {
+        "key": "MODEL_FILES",
+        "input": {
+          "name": "Model Files to create",
+          "type": "string",
+          "description": "Manual model files to create, comma-separated in the format name=path",
+          "default": "",
+          "advanced": true
         }
       },
       {
